@@ -1,0 +1,14 @@
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.vspscc
+*.vssscc
+.vs/
+Server/Server/bin/
+Server/Server/obj/
+*.user
+*.suo
+*.vssscc
+*.vspscc
