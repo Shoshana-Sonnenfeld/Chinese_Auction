@@ -30,7 +30,7 @@ export class LoginComponent {
   isError: boolean = false;
   loading: boolean = false;
 
-  constructor(private fb: FormBuilder, private user: User,private router: Router) {
+  constructor(private fb: FormBuilder, private user: User, private router: Router) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -57,6 +57,9 @@ export class LoginComponent {
         this.message = 'Successfully logged in!';
         this.loginForm.reset();
         this.loading = false;
+
+        // ניווט רק אם ההתחברות הצליחה
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         console.error('Login failed', err);
@@ -66,6 +69,7 @@ export class LoginComponent {
       }
     });
 
-    this.router.navigate(['/home'])
+    // הסרתי את הניווט מכאן
   }
+
 }

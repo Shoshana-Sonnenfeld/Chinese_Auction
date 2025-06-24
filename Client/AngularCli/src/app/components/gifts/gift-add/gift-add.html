@@ -12,13 +12,15 @@
 
       <div class="form-group" [ngClass]="{'invalid': isInvalid('categoryId')}">
         <label for="categoryId">Category</label>
-  <p-dropdown id="categoryId" [options]="categoryOptions" optionLabel="label" formControlName="categoryId" placeholder="Select a category"></p-dropdown>
+        <p-select id="categoryId" [options]="categoryOptions" optionLabel="label" formControlName="categoryId"
+          placeholder="Select a category"></p-select>
         <small *ngIf="isInvalid('categoryId')" class="error-text">Category is required.</small>
       </div>
 
       <div class="form-group" [ngClass]="{'invalid': isInvalid('donorId')}">
         <label for="donorId">Donor</label>
-      <p-dropdown id="donorId" [options]="donorOptions" optionLabel="label" formControlName="donorId" placeholder="Select a donor"></p-dropdown>
+        <p-select id="donorId" [options]="donorOptions" optionLabel="label" formControlName="donorId"
+          placeholder="Select a donor"></p-select>
         <small *ngIf="isInvalid('donorId')" class="error-text">Donor is required.</small>
       </div>
 
@@ -46,7 +48,13 @@
           <i class="pi pi-spin pi-spinner"></i> Saving...
         </ng-container>
       </button>
+      <br />
+      <br />
+      <button pButton type="button" (click)="onCancel()" class="p-button-sm p-button-danger">
+        <i class="pi pi-times"></i> Cancel
+      </button>
     </form>
+
 
     <div *ngIf="message" [ngClass]="{'error-message': isError, 'success-message': !isError}" class="status-message">
       {{ message }}

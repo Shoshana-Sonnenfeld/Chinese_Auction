@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';     
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { RouterModule, Router } from '@angular/router';
+
 import { GiftService } from '../../../services/gift.service';
 import { CategoryService } from '../../../services/category.service';
 import { DonorService } from '../../../services/donor.service';
 import { Category } from '../../../models/category.model';
 import { Donor } from '../../../models/donor.model';
+import { SelectModule } from 'primeng/select';
+import { log } from 'console';
 
 @Component({
   selector: 'app-gift-add',
@@ -20,24 +23,20 @@ import { Donor } from '../../../models/donor.model';
     InputTextModule,
     DropdownModule,
     ButtonModule,
-    RouterModule
+    RouterModule,
+    SelectModule
   ],
   templateUrl: './gift-add.html',
   styleUrls: ['./gift-add.scss']
 })
 export class GiftAddComponent implements OnInit {
+
   giftForm: FormGroup;
   categories: Category[] = [];
   donors: Donor[] = [];
 
-  get categoryOptions() {
-    return this.categories.map(c => ({ label: c.name, value: c.id }));
-  }
-
-  get donorOptions() {
-    return this.donors.map(d => ({ label: d.name, value: d.id }));
-  }
-
+  categoryOptions: { label: string, value: any }[] = [];
+  donorOptions: { label: string, value: any }[] = [];
   message: string = '';
   isError: boolean = false;
   isSubmitting: boolean = false;
@@ -60,11 +59,20 @@ export class GiftAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService.getAllCategories().subscribe(res => this.categories = Array.isArray(res) ? res : []);
-    this.donorService.getAllDonors().subscribe(res => this.donors = Array.isArray(res) ? res : []);
+    this.categoryService.getAllCategories().subscribe((res: any) => {
+      this.categories = Array.isArray(res?.$values) ? res.$values : [];
+      this.categoryOptions = this.categories.map(c => ({ label: c.name, value: c }));
+    });
+
+    this.donorService.getAllDonors().subscribe((res: any) => {
+      this.donors = Array.isArray(res?.$values) ? res.$values : [];
+      this.donorOptions = this.donors.map(d => ({ label: d.name, value: d }));
+    });
   }
 
   onSubmit() {
+    if (this.giftForm.valid)
+      console.log(this.giftForm.value);
     if (this.giftForm.valid) {
       this.isSubmitting = true;
       this.message = '';
@@ -85,6 +93,11 @@ export class GiftAddComponent implements OnInit {
       });
     }
   }
+
+  onCancel() {
+   this.router.navigate(['/gifts']);
+
+}
 
   isInvalid(controlName: string): boolean {
     const control = this.giftForm.get(controlName);

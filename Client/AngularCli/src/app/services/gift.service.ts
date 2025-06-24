@@ -21,12 +21,25 @@ export class GiftService {
     return this.http.get<Gift>(`${this.baseUrl}/${id}`);
   }
 
-  addGift(gift: Partial<Gift>): Observable<Gift> {
+addGift(gift: Partial<Gift>): Observable<Gift> {
+    const newGift = {
+      ...gift,
+      categoryId:
+        typeof (gift.categoryId as any) === 'object' && gift.categoryId !== null
+          ? (gift.categoryId as any).value
+          : gift.categoryId ?? 0,
+      donorId:
+        typeof (gift.donorId as any) === 'object' && gift.donorId !== null
+          ? (gift.donorId as any).value
+          : gift.donorId ?? 0,
+    };
+
     const token = this.auth.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post<Gift>(this.baseUrl, gift, { headers });
+    
+    return this.http.post<Gift>(this.baseUrl, newGift, { headers });
   }
 
   updateGift(id: number, gift: Partial<Gift>): Observable<any> {
