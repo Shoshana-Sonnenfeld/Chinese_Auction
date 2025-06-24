@@ -35,6 +35,7 @@ builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     // äåñôú úîéëä á-JWT Authorization
@@ -99,11 +100,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAngularApp");
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCors("AllowAngularApp");
-
 app.MapControllers();
 
 app.Run();
