@@ -1,0 +1,47 @@
+<!-- תפריט עליון -->
+<p-menubar [model]="items" class="custom-menubar"></p-menubar>
+
+<!-- Avatar עם Popover -->
+<div class="avatar-wrapper">
+  <p-popover>
+    <ng-template pTemplate="trigger">
+      <p-avatar
+        [label]="initials"
+        shape="circle"
+        [style]="{
+          'background-color': '#007ad9',
+          'color': 'white',
+          'width': '40px',
+          'height': '40px',
+          'font-size': '1rem'
+        }">
+      </p-avatar>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+      <div class="overlay-content">
+        <div class="user-name">{{ fullName }}</div>
+        <button
+          pButton
+          label="Logout"
+          icon="pi pi-sign-out"
+          class="p-button-sm p-button-danger w-full mt-2"
+          (click)="logout()">
+        </button>
+      </div>
+    </ng-template>
+  </p-popover>
+</div>
+
+<!-- תוכן הדף -->
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- תחתית -->
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; Your Company Name. All rights reserved.</p>
+    <p>Powered by Angular and PrimeNG</p>
+  </div>
+</footer>

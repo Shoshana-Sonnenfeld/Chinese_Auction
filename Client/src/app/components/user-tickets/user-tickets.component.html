@@ -1,0 +1,57 @@
+<style>
+.ticket-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 600px) {
+  .ticket-list {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+}
+.ticket-card {
+  width: 100%;
+  min-width: 0;
+}
+.ticket-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.ticket-body p {
+  margin: 0.2em 0;
+  word-break: break-word;
+}
+</style>
+
+<h2>My Tickets</h2>
+
+<div *ngIf="isLoading">Loading tickets...</div>
+
+<div *ngIf="!isLoading && tickets.length === 0">
+  <p>You haven't bought any tickets yet.</p>
+</div>
+
+<div class="ticket-list" *ngIf="tickets.length > 0">
+  <p-card *ngFor="let ticket of tickets" styleClass="ticket-card">
+    <ng-template pTemplate="header">
+      <div class="ticket-header">
+        <strong>{{ ticket.gift.giftName }}</strong>
+        <p-tag [value]="getStatusLabel()" [severity]="getStatusSeverity()"></p-tag>
+      </div>
+    </ng-template>
+
+    <div class="ticket-body">
+      <p><strong>Id:</strong> {{ ticket.id}}</p>
+      <p><strong>Donor:</strong> {{ ticket.gift.donor?.name || 'Anonymous' }}</p>
+      <p><strong>Category:</strong> {{ ticket.gift.categoryName }}</p>
+      <p><strong>Order Date:</strong> {{ ticket.orderDate | date:'short' }}</p>
+      <p *ngIf="ticket.gift.winnerId === ticket.userId" style="color: green;"><strong>You won this gift!</strong></p>
+      <p *ngIf="ticket.gift.winnerId !== ticket.userId && ticket.gift.winnerId" style="color: #b71c1c;"><strong>You did not win this gift.</strong></p>
+      <p *ngIf="!ticket.gift.winnerId" style="color: #616161;"><strong>No winner has been selected yet.</strong></p>
+    </div>
+  </p-card>
+</div>

@@ -1,0 +1,19 @@
+.avatar-wrapper {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.overlay-content {
+  padding: 0.5rem;
+  min-width: 150px;
+}
+
+.user-name {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}

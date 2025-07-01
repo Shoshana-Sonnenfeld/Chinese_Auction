@@ -1,0 +1,82 @@
+.card-container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filters input {
+  width: 180px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  background-color: #f3f6fa;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.filters input:focus {
+  border-color: #007ad9;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 122, 217, 0.3);
+  outline: none;
+}
+
+.filters button {
+  height: 38px;
+  align-self: center;
+  font-size: 0.85rem;
+}
+
+p-table {
+  font-size: 0.85rem;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+p-table ::ng-deep .p-datatable-thead > tr > th {
+  background-color: #007ad9;
+  color: #fff;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  text-align: right;
+  border: none !important;
+}
+
+p-table ::ng-deep .p-datatable-tbody > tr > td {
+  padding: 0.5rem 0.75rem;
+  vertical-align: middle;
+  border: none !important;
+}
+
+p-table ::ng-deep .p-datatable-tbody > tr {
+  background-color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+p-table ::ng-deep .p-datatable-tbody > tr:hover {
+  background-color: #f5faff;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.p-button-sm {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  height: 2rem;
+  line-height: 1.5;
+}

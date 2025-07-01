@@ -1,0 +1,17 @@
+<div class="summary-component">
+  <h2>Summary</h2>
+  <div class="summary-actions">
+    <button pButton type="button" label="Create & View Winners Report (PDF)" (click)="downloadWinnersReport()"></button>
+    <button pButton type="button" label="Show Total Revenue" (click)="showTotalRevenue()"></button>
+  </div>
+  <div *ngIf="pdfUrl" class="pdf-viewer">
+    <iframe [src]="pdfUrl | safeUrl" width="100%" height="500px"></iframe>
+    <div style="margin-top: 0.5rem; display: flex; gap: 1rem;">
+      <button pButton type="button" label="Download PDF" (click)="downloadPdfFile()"></button>
+      <button pButton type="button" label="Close PDF" (click)="closePdf()" class="p-button-secondary"></button>
+    </div>
+  </div>
+  <div *ngIf="totalRevenue !== null" class="revenue-result">
+    <strong>Total Revenue:</strong> {{ totalRevenue | number:'1.0-2' }} ₪
+  </div>
+</div>

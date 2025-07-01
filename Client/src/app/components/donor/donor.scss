@@ -1,0 +1,31 @@
+
+
+.edit-label {
+  color: #3b82f6; /* blue */
+}
+
+.delete-label {
+  color: #ef4444; /* red */
+}
+
+p-button.p-button-sm {
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+}
+.actions-cell {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  gap: 0.5rem; /* רווח בין כפתורים */
+
+  button {
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+

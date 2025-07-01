@@ -1,0 +1,14 @@
+<p-toast></p-toast>
+
+<div class="raffle-container">
+  <div *ngFor="let gift of gifts">
+    <p-card [header]="gift.giftName">
+      <ng-template pTemplate="content">
+        <p *ngIf="gift.details">{{ gift.details }}</p>
+        <p *ngIf="gift.price">Price: {{ gift.price }} ₪</p>
+        <button pButton label="Raffle" (click)="raffle(gift.id)"></button>
+        <p *ngIf="raffleResults[gift.id]">Result: {{ raffleResults[gift.id] }}</p>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

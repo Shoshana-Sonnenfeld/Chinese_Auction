@@ -1,0 +1,40 @@
+# .NET build results
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+.vscode/
+
+# Rider
+.idea/
+*.sln.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Entity Framework
+Migrations/*Designer.cs
+Migrations/*Snapshot.cs
+
+# Sensitive files
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.local.json
+
+# Others
+*.db
+*.bak
+*.swp
+*.tmp
+
+# Ignore publish output
+publish/

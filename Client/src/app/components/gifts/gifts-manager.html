@@ -1,0 +1,103 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+
+<!-- כותרת כללית -->
+<h2 class="p-text-center p-mb-3">Gift Management</h2>
+
+<!-- שורת חיפוש והוספה -->
+<div class="filters">
+  <input pInputText [(ngModel)]="giftNameFilter" (ngModelChange)="applyFilters()" placeholder="Search by gift name" />
+  <input pInputText [(ngModel)]="donorFilter" (ngModelChange)="applyFilters()" placeholder="Search by donor" />
+  <input pInputText [(ngModel)]="categoryFilter" (ngModelChange)="applyFilters()" placeholder="Search by category" />
+  <button pButton type="button" icon="pi pi-plus" label="Add Gift" class="p-button-success" (click)="onAddGift()"></button>
+</div>
+
+<!-- עטיפת הטבלה בכרטיס -->
+<div class="card-container">
+<p-table 
+  [value]="gifts"
+  [paginator]="true"
+  [rows]="10"
+  [responsiveLayout]="'scroll'"
+  [autoLayout]="true"
+  class="p-datatable-sm no-lines">    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Details</th>
+        <th>Category</th>
+        <th>Donor</th>
+        <th>Price</th>
+        <th>Tickets</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-gift>
+      <tr>
+        <td>{{ gift.giftName }}</td>
+        <td>{{ gift.details }}</td>
+        <td>{{ gift.category?.name }}</td>
+        <td>{{ gift.donor?.name }}</td>
+        <td>{{ gift.price | currency: 'ILS' }}</td>
+        <td>
+          <button pButton icon="pi pi-ticket" label="View" class="p-button-sm p-button-secondary w-full"
+            (click)="openTicketsDialog(gift)">
+          </button>
+        </td>
+        <td>
+          <div class="actions">
+            <button pButton label="Edit" class="p-button-sm p-button-warning" (click)="onEditGift(gift)">
+            </button>
+            <button pButton label="Delete" class="p-button-sm p-button-danger" (click)="onDeleteGift(gift.id)">
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- דיאלוג עריכה -->
+<p-dialog header="Edit Gift" [(visible)]="editDialogVisible" [modal]="true" [closable]="true" [style]="{ width: '30vw' }">
+  <ng-template pTemplate="content">
+    <form *ngIf="selectedGift">
+      <div class="p-fluid">
+        <div class="field">
+          <label for="giftName">Name</label>
+          <input id="giftName" type="text" pInputText [(ngModel)]="selectedGift.giftName" name="giftName" />
+        </div>
+        <div class="field">
+          <label for="price">Price</label>
+          <input id="price" type="number" pInputText [(ngModel)]="selectedGift.price" name="price" />
+        </div>
+        <div class="field">
+          <label for="details">Details</label>
+          <input id="details" type="text" pInputText [(ngModel)]="selectedGift.details" name="details" />
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton label="Save" icon="pi pi-check" (click)="onSaveEdit()"></button>
+    <button pButton label="Cancel" icon="pi pi-times" class="p-button-secondary" (click)="editDialogVisible = false"></button>
+  </ng-template>
+</p-dialog>
+
+<!-- דיאלוג צפייה בכרטיסים -->
+<p-dialog *ngIf="ticketsDialogVisible" header="Gift Tickets" [(visible)]="ticketsDialogVisible" [modal]="true"
+  [style]="{ width: '30vw' }">
+  <ng-template pTemplate="content">
+    <div *ngIf="selectedGiftTickets && selectedGiftTickets.length > 0; else noTickets">
+      <div *ngFor="let t of selectedGiftTickets">
+        <p>Ticket ID: {{ t.id }}</p>
+        <p>Gift ID: {{ t.gift.id }}</p>
+        <p>User ID: {{ t.user.id }}</p>
+        <p>User name: {{ t.user.fullName }}</p>
+        <hr />
+      </div>
+    </div>
+    <ng-template #noTickets>
+      <p>No tickets available.</p>
+    </ng-template>
+  </ng-template>
+</p-dialog>
