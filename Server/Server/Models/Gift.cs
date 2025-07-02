@@ -16,7 +16,9 @@ namespace Server.Models
         public string? ImageUrl { get; set; }
         public string? Details { get; set; }
 
-        [Range(10, 100, ErrorMessage = "The price must be between 10 and 100")]
+       /// <summary>
+       /// [Range(10, 100, ErrorMessage = "The price must be between 10 and 100")]
+       /// </summary>
         public int Price { get; set; }
         public int? WinnerId { get; set; }
         public User? Winner { get; set; }

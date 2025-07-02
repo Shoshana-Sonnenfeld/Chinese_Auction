@@ -5,7 +5,7 @@ import { filter } from 'rxjs/operators';
 import { Auth } from '../../services/auth.service';
 
 import { AvatarModule } from 'primeng/avatar';
-import { PopoverModule } from 'primeng/popover';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { RouterModule } from '@angular/router';
@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [
     AvatarModule,
-    PopoverModule,
+    OverlayPanelModule,
     MenubarModule,
     ButtonModule,
     RouterModule
