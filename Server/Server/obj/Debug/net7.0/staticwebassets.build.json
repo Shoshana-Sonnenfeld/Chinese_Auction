@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "Hash": "mU9bEyEesSyJhGcvQFTl81Cb9z/ZelMGyuSB4tpXoTw=",
+  "Source": "Server",
+  "BasePath": "_content/Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Server\\wwwroot",
+      "Source": "Server",
+      "ContentRoot": "C:\\Users\\user1\\Documents\\Chinese-Auction\\Server\\Server\\wwwroot\\",
+      "BasePath": "_content/Server",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\user1\\Documents\\Chinese-Auction\\Server\\Server\\wwwroot\\images\\797bd975-517a-47bf-987a-9fb4c0a11460.jpg",
+      "SourceId": "Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user1\\Documents\\Chinese-Auction\\Server\\Server\\wwwroot\\",
+      "BasePath": "_content/Server",
+      "RelativePath": "images/797bd975-517a-47bf-987a-9fb4c0a11460.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\797bd975-517a-47bf-987a-9fb4c0a11460.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\user1\\Documents\\Chinese-Auction\\Server\\Server\\wwwroot\\images\\97cd13f7-faaa-45d4-8f71-642f5334e9c4.jpg",
+      "SourceId": "Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user1\\Documents\\Chinese-Auction\\Server\\Server\\wwwroot\\",
+      "BasePath": "_content/Server",
+      "RelativePath": "images/97cd13f7-faaa-45d4-8f71-642f5334e9c4.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\97cd13f7-faaa-45d4-8f71-642f5334e9c4.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\user1\\Documents\\Chinese-Auction\\Server\\Server\\wwwroot\\images\\cdabd015-8761-4d6c-86b4-e1962264d699.JPG",
+      "SourceId": "Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user1\\Documents\\Chinese-Auction\\Server\\Server\\wwwroot\\",
+      "BasePath": "_content/Server",
+      "RelativePath": "images/cdabd015-8761-4d6c-86b4-e1962264d699.JPG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\cdabd015-8761-4d6c-86b4-e1962264d699.JPG"
+    }
+  ]
+}

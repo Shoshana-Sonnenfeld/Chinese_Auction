@@ -16,12 +16,8 @@ export class Auth {
 
   // שליפת הטוקן
   getToken(): string | null {
-  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
     return localStorage.getItem('token');
   }
-  return null;
-}
-
 
   // שליפת fullName
   getFullName(): string | null {
@@ -47,9 +43,9 @@ export class Auth {
   }
 
   // שליפת role מתוך ה-token
-  getUserRole(): string | "" {
+  getUserRole(): string | null {
     const decoded = this.getDecodedToken();
-    return decoded ? decoded.role : "";
+    return decoded ? decoded.role : null;
   }
 
 }

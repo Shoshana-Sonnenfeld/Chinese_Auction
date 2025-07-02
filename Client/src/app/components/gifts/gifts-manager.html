@@ -32,6 +32,7 @@
         <th>Actions</th>
       </tr>
     </ng-template>
+
     <ng-template pTemplate="body" let-gift>
       <tr>
         <td>{{ gift.giftName }}</td>
@@ -90,8 +91,9 @@
     <div *ngIf="selectedGiftTickets && selectedGiftTickets.length > 0; else noTickets">
       <div *ngFor="let t of selectedGiftTickets">
         <p>Ticket ID: {{ t.id }}</p>
-        <p>Gift ID: {{ t.gift.id }}</p>
-        <p>User ID: {{ t.user.id }}</p>
+        <p>Gift ID: {{ t.giftId }}</p>
+        <p>Gift ID: {{ t.giftId }}</p>
+        <p>ticket status: {{ t.status }}</p>
         <p>User name: {{ t.user.fullName }}</p>
         <hr />
       </div>

@@ -1,39 +1,36 @@
 <!-- תפריט עליון -->
 <p-menubar [model]="items" class="custom-menubar"></p-menubar>
 
-<!-- Avatar עם OverlayPanel -->
+<!-- Avatar עם Popover - מוצב מחוץ ל-menubar -->
 <div class="avatar-wrapper">
-  <p-avatar
-    [label]="initials"
-    shape="circle"
-    [style]="{
-      'background-color': '#007ad9',
-      'color': 'white',
-      'width': '40px',
-      'height': '40px',
-      'font-size': '1rem',
-      'cursor': 'pointer'
-    }"
-    (click)="overlayPanel.toggle($event)">
-  </p-avatar>
-  <p-overlayPanel #overlayPanel>
-    <div class="overlay-content">
-      <div class="user-name">{{ fullName }}</div>
-      <button
-        pButton
-        label="Logout"
-        icon="pi pi-sign-out"
-        class="p-button-sm p-button-danger w-full mt-2"
-        (click)="logout(); overlayPanel.hide()">
-      </button>
-    </div>
-  </p-overlayPanel>
+  <p-popover>
+    <ng-template pTemplate="trigger">
+      <div class="avatar-container">
+        <p-avatar
+          [label]="initials"
+          shape="circle"
+          class="custom-avatar">
+        </p-avatar>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+      <div class="overlay-content">
+        <div class="user-name">{{ fullName }}</div>
+        <button
+          pButton
+          label="Logout"
+          icon="pi pi-sign-out"
+          class="p-button-sm p-button-danger w-full mt-2"
+          (click)="logout()">
+        </button>
+      </div>
+    </ng-template>
+  </p-popover>
 </div>
 
-<!-- תוכן הדף -->
-<main class="main-content">
-  <router-outlet></router-outlet>
-</main>
+<!-- תצוגת תוכן של ראוטר -->
+<router-outlet></router-outlet>
 
 <!-- תחתית -->
 <footer class="footer">

@@ -8,10 +8,9 @@ export interface Gift {
   id: number;
   giftName: string;
   donorId: number;
-  donor?: Donor;
+  donor: Donor;
   categoryId: number;
-  category?: Category;
-  categoryName?: string; // אופציונלי
+  category: Category;
   imageUrl?: string;
   details?: string;
   price: number;

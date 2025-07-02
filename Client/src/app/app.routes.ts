@@ -1,5 +1,3 @@
-// 
-
 import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login';
 import { SignUpComponent } from './components/sign-up-component/sign-up-component';
@@ -11,46 +9,36 @@ import { GiftComponent } from './components/gifts/gift-user/gifts';
 import { GiftAddComponent } from './components/gifts/gift-add/gift-add';
 import { CreditPaymentComponent } from './components/credit-payment-component/credit-payment-component';
 import { GiftManagerComponent } from './components/gifts/gifts-manager';
-import { PendingTicketsComponent } from './components/pending-ticket/pending-ticket.component';
-import { RoleGuard } from './roleGuard';
-import { GiftListComponent } from './components/gift-list/gift-list.component';
-import { UserTicketsComponent } from './components/user-tickets/user-tickets.component';
 import { RaffleGiftComponent } from './components/raffle-gift/raffle-gift';
-import { SummaryComponent } from './components/summary/summary';
-
 
 export const routes: Routes = [
+
+  // דף ברירת מחדל - הפניה ל־login
   { path: '', redirectTo: 'login', pathMatch: 'full' },
+
 
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
 
+  // דפים עם תפריט + פוטר
   {
     path: '',
     component: Layout,
     children: [
       { path: 'home', component: HomeComponent },
-
-      // Admin-only
-      { path: 'categories', component: CategoryComponent, canActivate: [RoleGuard], data: { roles: ['Manager'] } },
-      { path: 'donors', component: DonorComponent, canActivate: [RoleGuard], data: { roles: ['Manager'] } },
-      { path: 'gifts/add', component: GiftAddComponent, canActivate: [RoleGuard], data: { roles: ['Manager'] } },
-      { path: 'giftsManager', component: GiftManagerComponent, canActivate: [RoleGuard], data: { roles: ['Manager'] } },
-      { path: 'raffle', component: RaffleGiftComponent, canActivate: [RoleGuard], data: { roles: ['Manager'] } },
-      { path: 'summary', component: SummaryComponent, canActivate: [RoleGuard], data: { roles: ['Manager'] } },
-
-
-      // User-only
-      { path: 'purchase', component: PendingTicketsComponent, canActivate: [RoleGuard], data: { roles: ['User', 'Manager'] } },
-      { path: 'credit-payment', component: CreditPaymentComponent, canActivate: [RoleGuard], data: { roles: ['User', 'Manager'] } },
-      { path: 'giftslist', component: GiftListComponent, canActivate: [RoleGuard], data: { roles: ['User', 'Manager'] } },
-      { path: 'usertickets', component: UserTicketsComponent, canActivate: [RoleGuard], data: { roles: ['User', 'Manager'] } },
-
-      // Everyone
+      { path: 'categories', component: CategoryComponent },
+      { path: 'donors', component: DonorComponent },
       { path: 'gifts', component: GiftComponent },
-      { path: 'giftslist', component: GiftComponent },
+      { path: 'gifts/add', component: GiftAddComponent },
+      { path: "giftslist", component: GiftComponent },
+      { path: "giftsManager", component:GiftManagerComponent  },
+      { path: 'raffle', component: RaffleGiftComponent },
+      { path: 'summary', loadComponent: () => import('./components/summary/summary').then(m => m.SummaryComponent) },
+      { path: "payment-card", component: CreditPaymentComponent }
     ]
   },
 
+  // כתובת לא קיימת → דף הבית
   { path: '**', redirectTo: 'home' }
-];
+]
+

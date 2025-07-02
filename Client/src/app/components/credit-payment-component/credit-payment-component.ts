@@ -1,15 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { TicketService } from '../../services/ticket.service';
-import { Ticket } from '../../models/ticket.model';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-credit-payment',
@@ -26,78 +22,55 @@ import { forkJoin } from 'rxjs';
   templateUrl: './credit-payment-component.html',
   styleUrls: ['./credit-payment-component.scss']
 })
-export class CreditPaymentComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private ticketService = inject(TicketService);
-  private fb = inject(FormBuilder);
-
-  paymentForm!: FormGroup;
-  tickets: Ticket[] = [];
-  totalPrice = 0;
-  returnUrl = '/';
-  isProcessing = false;
-  successMessage = '';
+export class CreditPaymentComponent {
+  paymentForm;
   focusedField: string | null = null;
+  isProcessing = false;
+  successMessage: string | null = null;
 
-
-ngOnInit() {
-  this.paymentForm = this.fb.group({
-    cardNumber: ['', [Validators.required]],
-    cardHolder: ['', [Validators.required]],
-    expiry: ['', [Validators.required]],
-    cvv: ['', [Validators.required]]
-  });
-
-  const query = this.route.snapshot.queryParamMap;
-
-  const ticketId = query.get('ticketId');
-  const ticketIds = query.get('ticketIds');
-  this.returnUrl = query.get('returnUrl') ?? '/purchase';
-
-  if (ticketId) {
-    // תשלום עבור כרטיס בודד
-    this.ticketService.getById(+ticketId).subscribe(ticket => {
-      this.tickets = [ticket];
-      this.totalPrice = ticket.gift.price;
-    });
-  } else if (ticketIds) {
-    // תשלום עבור מספר כרטיסים
-    const ids = ticketIds.split(',').filter(id => id).map(id => +id);
-    const requests = ids.map(id => this.ticketService.getById(id));
-
-    forkJoin(requests).subscribe(results => {
-      this.tickets = results.filter((t): t is Ticket => !!t);
-      this.totalPrice = this.tickets.reduce((sum, t) => sum + t.gift.price, 0);
+  constructor(private fb: FormBuilder) {
+    this.paymentForm = this.fb.group({
+      cardNumber: ['', [Validators.required]],
+      cardHolder: ['', [Validators.required]],
+      expiry: ['', [Validators.required, this.expiryValidator]],
+      cvv: ['', [Validators.required]],
     });
   }
-}
 
+  expiryValidator(control: any) {
+    const value = control.value;
+    if (!value || value.length !== 5 || !/^\d{2}\/\d{2}$/.test(value)) {
+      return { invalidExpiry: true };
+    }
+    const [month, year] = value.split('/').map(Number);
+    if (month < 1 || month > 12) {
+      return { invalidExpiry: true };
+    }
+    const now = new Date();
+    const expiryDate = new Date(2000 + year, month);
+    if (expiryDate < now) {
+      return { expired: true };
+    }
+    return null;
+  }
 
   submit() {
-    if (this.paymentForm.invalid || this.isProcessing) {
+    if (this.paymentForm.invalid) {
       this.paymentForm.markAllAsTouched();
+      this.successMessage = 'Please fill all fields correctly.';
+      setTimeout(() => (this.successMessage = null), 3000);
       return;
     }
 
     this.isProcessing = true;
 
-    Promise.all(
-      this.tickets.map(ticket =>
-        this.ticketService.pay(ticket.id).toPromise()
-      )
-    ).then(() => {
-      this.successMessage = 'Payment completed successfully!';
-      this.paymentForm.reset();
-
-      setTimeout(() => {
-        this.router.navigateByUrl(this.returnUrl);
-      }, 2000);
-    }).catch(() => {
-      alert('Payment failed. Please try again.');
-    }).finally(() => {
+    setTimeout(() => {
       this.isProcessing = false;
-    });
+      this.successMessage = 'Payment successful! 🎉';
+      this.paymentForm.reset();
+      this.focusedField = null;
+      setTimeout(() => (this.successMessage = null), 4000);
+    }, 2000);
   }
 
   onFocus(field: string) {

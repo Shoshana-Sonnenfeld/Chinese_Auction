@@ -4,12 +4,11 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
-import { Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 import { GiftService } from '../../../services/gift.service';
 import { CategoryService } from '../../../services/category.service';
-import { DonorService } from '../../../services/donor-service';
+import { DonorService } from '../../../services/donor.service';
 import { Category } from '../../../models/category.model';
 import { Donor } from '../../../models/donor.model';
 
@@ -38,8 +37,6 @@ export class GiftAddComponent implements OnInit {
   message: string = '';
   isError: boolean = false;
   isSubmitting: boolean = false;
-  selectedFile: File | null = null;
-  previewUrl: string | ArrayBuffer | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -70,43 +67,30 @@ export class GiftAddComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
-      const reader = new FileReader();
-      reader.onload = e => this.previewUrl = reader.result;
-      reader.readAsDataURL(file);
-    }
-  }
+  onSubmit() {
+    if (this.giftForm.valid) {
+      this.isSubmitting = true;
+      this.message = '';
 
-  async onSubmit() {
-    this.isSubmitting = true;
-    this.isError = false;
-    this.message = '';
-    try {
-      let imageUrl = '';
-      if (this.selectedFile) {
-        const formData = new FormData();
-        formData.append('file', this.selectedFile);
-        // העלאת קובץ לשרת
-        const uploadRes: any = await this.giftService.uploadImage(formData).toPromise();
-        imageUrl = uploadRes.imageUrl;
-        this.giftForm.patchValue({ imageUrl });
-      }
-      // שליחת שאר הנתונים
-      await this.giftService.addGift(this.giftForm.value).toPromise();
-      this.router.navigate(['giftsManager']); // מעבר אוטומטי לעמוד הצגת כל המתנות
-    } catch (err: any) {
-      this.isError = true;
-      this.message = err.error?.message || 'Error adding gift';
-    } finally {
-      this.isSubmitting = false;
+      this.giftService.addGift(this.giftForm.value).subscribe({
+        next: () => {
+          this.isError = false;
+          this.message = 'Gift saved successfully.';
+          this.isSubmitting = false;
+          this.router.navigate(['/gifts']);
+        },
+        error: (err) => {
+          this.isError = true;
+          this.message = 'Failed to save gift. Please try again.';
+          this.isSubmitting = false;
+          console.error(err);
+        }
+      });
     }
   }
 
   onCancel() {
-    this.router.navigate(['giftsManager']);
+    this.router.navigate(['/giftsManager']);
   }
 
   isInvalid(controlName: string): boolean {
